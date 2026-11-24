@@ -1,4 +1,14 @@
 {
+    "24-11-2026": {
+        "date": "24-11-2026",
+        "title": "Changes in Backend",
+        "changes": [
+            "- New bot is now up, did a huge change to the database.",
+            "- Privacy Policy: https://island-project.black-mountain-38c3.workers.dev/privacy",
+            "- Terms of Service: https://island-project.black-mountain-38c3.workers.dev/terms",
+            "- Added **Ban & Appeal System**, also new command: **/appeal**"
+        ]
+    },
     "24-07-2026": {
         "date": "24-07-2026",
         "title": "Emoji Updates",
