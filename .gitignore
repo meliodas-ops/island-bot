@@ -1,0 +1,6 @@
+node_modules
+.env
+bots.sqlite
+package-lock.json
+clear-cmds.js
+deploy-cmds.js

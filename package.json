@@ -1,0 +1,21 @@
+{
+  "name": "island2",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "discord.js": "^14.26.5",
+    "dotenv": "^16.3.1",
+    "fs": "^0.0.1-security",
+    "pidusage": "^4.0.1",
+    "sequelize": "^6.35.1",
+    "sqlite3": "^5.1.7"
+  }
+}

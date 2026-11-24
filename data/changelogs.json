@@ -1,0 +1,170 @@
+{
+    "24-07-2026": {
+        "date": "24-07-2026",
+        "title": "Emoji Updates",
+        "changes": [
+            "- New emoji for island fragments: <:islandFragments:1530146476066607175>",
+            "-# Special thanks to sam"
+        ]
+    },
+    "23-07-2026": {
+        "date": "23-07-2026",
+        "title": "Command Updates",
+        "changes": [
+            "- Removed **/gamble coins**, thank you for testing!"
+        ]
+    },
+    "18-07-2026": {
+        "date": "18-07-2026",
+        "title": "New Command & Updates",
+        "changes": [
+            "- New command called mines, added mine to **/gamble**",
+            "- Works like any traditional mine game, do let the devs know if you find any bugs or the reward payout is a little too much",
+            "- New promocode ticket emoji\n-# special thanks to sam once again!",
+            "_ _",
+            "Updates:",
+            "- **/gamble mines**",
+            "- - 5x5 - 0.4+ -> 0.2+",
+            "- - 4x4 - 0.4+ -> 0.2+",
+            "- Mine counts:",
+            "- - 4x4 - 5 -> 3",
+            "- - 5x5 - 9 -> 6",
+            "_ _",
+            "- new promocode `MINES` for 5000 <:coin:1526630242213695548>",
+            "- do **/redeem redeem code:** to claim it",
+            "-# Expires: <t:1787066340:R>"
+        ]
+    },
+    "16-07-2026": {
+        "date": "16-07-2026",
+        "title": "New Commands & Features",
+        "changes": [
+            "- New Category: Badges",
+            "- Synced badges with **/player profile** command, badges can now be viewed under \"Acknowledgements\"",
+            "- Early Supporter will be given to first 20 registered players",
+            "- Testers will be chosen by me",
+            "_ _",
+            "- New system called prestige with prestige multipliers to rewards etc",
+            "- New command for system **/prestige info**",
+            "- Prestige level now displays in **/player** command",
+            "- Prestige Multiplier for Gold implemented into **/economy**",
+            "- New Currency Called Island Fragments (Available in through **/economy exchange**)",
+            "- Updated **/guide** command"
+        ]
+    },
+    "15-07-2026": {
+        "date": "15-07-2026",
+        "title": "Command Changes",
+        "changes": [
+            "- **/gamble coins**:",
+            "- **/Coldown:** **0s** -> **15s**",
+            "- gamble command added to **/cooldowns**",
+            "- Win chances: **50%** -> **50%**",
+            "- Loss chances: **50%** -> **50%**",
+            "- Set the max gambling amount to **150,000**",
+            "- Fixed bug in **/gamble coins**"
+        ]
+    },
+    "14-07-2026": {
+        "date": "14-07-2026",
+        "title": "New Commands & More",
+        "changes": [
+            "- New Command **/gamble**",
+            "- Added PromoCodes system",
+            "- New Command **/redeem**",
+            "- Emoji Change: 🪙 -> <:coin:1526630242213695548>",
+            "-# Special thanks to sam!",
+            "_ _",
+            "with the new system being added, use the code \"`COINREDEMPT`\" to get 3000 <:coin:1526630242213695548> added to your account!",
+            "use the code \"`XPREDEMPT`\" to get 5000 XP added to your account!"
+        ]
+    },
+    "12-07-2026": {
+        "date": "12-07-2026",
+        "title": "Command Updates",
+        "changes": [
+            "- **/economy rob**:",
+            "- - Chances:",
+            "- - - Success Rate: 15% -> 2%",
+            "- - - Failure Rate: 85% -> 98%",
+            "- - Reward:",
+            "- - - Success: ",
+            "- - - - 1500 🪙 -> Between 5,000 - 10,000 🪙",
+            "- - - - 1,500 XP -> Between 5,000 - 10,000 XP",
+            "- - - Failure:",
+            "- - - - 0 :coin: -> 0 :coin:",
+            "- - - - 200 XP -> 500 XP",
+            "_ _",
+            "- **/player** can now be used globally!",
+            "_ _",
+            "### All Commands are now updated to support components v2 🎉"
+        ]
+    },
+    "11-07-2026": {
+        "date": "11-07-2026",
+        "title": "New Commands & More",
+        "changes": [
+            "- Added **/changelogs**",
+            "- Bot can now be added to servers! (Some commands wont be available)",
+            "- Better Backend Support",
+            "- New Bot Roles: Testers,Artists,Admins (For badges)"
+        ]
+    },
+    "10-07-2026": {
+        "date": "10-07-2026",
+        "title": "Economy Updates",
+        "changes": [
+            "- **/economy beg** Earnings increased: **150-200** -> **450-500** 🪙",
+            "- **/economy beg** Leveling XP increased: **150-200** -> **450-500** XP",
+            "- **/economy beg** Cooldown increased: **5s** -> **30s** ⏳"
+        ]
+    },
+    "07-07-2026": {
+        "date": "07-07-2026",
+        "title": "New Command!",
+        "changes": [
+            "- Added **/guide** command 📖",
+            "- Guide helps new players get started with the bot"
+        ]
+    },
+    "05-07-2026": {
+        "date": "05-07-2026",
+        "title": "Leveling System & New Commands!",
+        "changes": [
+            "- Added **/cooldown** command to check your cooldowns ⏰",
+            "- **Leveling System** added! 📊",
+            "- Earn XP by using economy commands (cooldowns don't count)",
+            "- View your level with **/player profile** or **/player level**",
+            "- Added **Leveling Leaderboard** with **/player leaderboard** 🏆",
+            "- **Leveling Rewards** added:",
+            "- - Level 1: 100 🪙",
+            "- - Level 2: 200 🪙",
+            "- **Registration Bonus**: 1000 🪙",
+            "- Added **Beg** command: **/economy beg** (cooldown: 5s)",
+            "- Added **Rob** command: **/economy rob** (cooldown: 1min)",
+            "- Successful Heist: Coins and XP",
+            "- Unsuccessful Heist: 200 XP"
+        ]
+    },
+    "04-07-2026": {
+        "date": "04-07-2026",
+        "title": "Economy Fixes & New Commands",
+        "changes": [
+            "- Fixed Economy Cooldown issues ✅",
+            "- Added **/bot info** command 🤖"
+        ]
+    },
+    "02-07-2026": {
+        "date": "02-07-2026",
+        "title": "Initial Release! 🎉",
+        "changes": [
+            "- Island Bot Created",
+            "- Support Server: https://discord.gg/wNCGKnCWwh",
+            "- **Economy System** added:",
+            "- - Work command: **/economy work**",
+            "- - Balance command: **/economy balance**",
+            "- **Daily** command added",
+            "- Changed Work cooldown: **60m** -> **15s** ⏳"
+        ]
+    }
+}
