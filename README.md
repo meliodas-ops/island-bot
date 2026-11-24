@@ -2,6 +2,10 @@
 
 Island Bot is a Discord economy game with player profiles, coin and Island Fragment wallets, XP, prestige, badges, and promo codes. It also tracks message XP separately for each Discord server. The bot runs on Node.js with discord.js and stores its game state and configuration in SQLite.
 
+The source is public for anyone interested in how the game works. To play Island Bot or get help, join the [official support server](https://discord.gg/wNCGKnCWwh).
+
+**Owner:** `meliodas.` · **Discord ID:** `663231875707568139`
+
 ## Start playing
 
 1. Run `/player register` and confirm. Registration grants 1,000 coins. Use `/player profile` to see your character.
@@ -11,40 +15,9 @@ Island Bot is a Discord economy game with player profiles, coin and Island Fragm
 
 **Player XP and server XP are separate.** Use `/player level` for economy progression and `/leveling rank` for message XP in your current server. A new server starts with message leveling disabled. When enabled, its defaults are 5–15 XP per eligible message and a 60-second interval per member. Bot messages and direct messages do not earn server XP.
 
-## Run your own instance
-
-Use Node.js 24 with npm, a Discord application with a bot user, and a provisioned copy of **bots.sqlite** in the project root. The code uses Node’s built-in `node:sqlite` for configuration reads and Sequelize with `sqlite3` for game data. Startup opens the existing database. A fresh installation needs a copy with the schema and configuration already populated.
-
-1. In the Discord Developer Portal, enable **Server Members Intent** and **Message Content Intent** for the bot. Install the application in your server with the bot and application command scopes, and give it permission to view and send messages in the channels it uses.
-2. Create a local `.env` in the project root with the following values. `GUILD_ID` is the support server where the guild-only commands belong.
-
-   ```dotenv
-   TOKEN=your_bot_token
-   CLIENT_ID=your_application_id
-   GUILD_ID=your_support_server_id
-   ```
-
-3. From the project root, install dependencies, register the commands, and start the bot.
-
-   ```sh
-   npm ci
-   node deploy-cmds.js
-   npm start
-   ```
-
-### Make changes and restart
-
-| Operation | What happens |
-| --- | --- |
-| `npm start` | Loads the current command and event handlers, connects to the database, and logs in. Startup does not deploy Discord commands or migrate tables. |
-| `node deploy-cmds.js` | Replaces the application's global command list and the support server's command list with the definitions in the current source tree. Run after adding, removing, renaming, or changing the options of a slash command. |
-| `node clear-cmds.js` | Clears both command lists on Discord. Run the deployment script to restore them. |
-
-Restart the process to load edited handlers. For a behavior-only change with the same slash-command definition, restarting is enough. The owner restart command exits the process, so automatic relaunch requires a process manager.
-
 ## Slash command reference
 
-Global commands are registered for the application. Support-server commands are registered only in the guild selected by `GUILD_ID`. The slash menu shows the arguments and choices for each subcommand.
+Global commands are available wherever the bot is installed. Support-server commands are available in the official support server. The slash menu shows the arguments and choices for each subcommand.
 
 | Global command | Subcommands or purpose |
 | --- | --- |
@@ -80,13 +53,7 @@ Global commands are registered for the application. Support-server commands are 
 
 A promo redemption records the actual reward and applies the grant in one database transaction. Codes can have fixed or random amounts, usage limits, an expiry, and an optional recipient restriction.
 
-Command access also depends on the command flags in `handler_settings` and memberships in `contributor_roles`. Some owner and profile-management checks additionally compare a Discord user ID in code. If you operate a separate instance, review those checks in `commands/Owner/`, `commands/Economy/player.js`, and `events/interactionCreate.js`. Restart after editing permission settings so cached values are refreshed.
-
-Keep the token and populated database private. For a consistent backup while the bot is running, use SQLite’s backup operation from the project root:
-
-```sh
-sqlite3 bots.sqlite ".backup 'island-backup.sqlite'"
-```
+Command access also depends on the command flags in `handler_settings` and memberships in `contributor_roles`. Some owner and profile-management checks additionally compare a Discord user ID in code.
 
 ## Project layout
 
@@ -95,5 +62,3 @@ sqlite3 bots.sqlite ".backup 'island-backup.sqlite'"
 - `events/` handles readiness, interactions, and message-based leveling.
 - `models/` defines player, economy, reward, and badge models. `serverModels/` defines server settings and server leveling.
 - `utils/` contains the shared database connection, configuration readers, command deployment logic, and game helpers.
-
-If a command is missing, check its scope in the tables above and confirm that you deployed to the intended application and guild. If startup reports a missing database or table, check that the populated file is named `bots.sqlite` and sits beside `bot.js`. If messages earn no XP, check the server's leveling toggle and interval.
