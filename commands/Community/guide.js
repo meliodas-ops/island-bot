@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Community/guide.js
 const {
     SlashCommandBuilder,
@@ -342,6 +343,7 @@ module.exports = {
         });
 
         collector.on('collect', async (i) => {
+            if (interactionBan(i)) return;
             if (i.customId === 'guide_prev') {
                 currentPage = Math.max(0, currentPage - 1);
             } else if (i.customId === 'guide_next') {

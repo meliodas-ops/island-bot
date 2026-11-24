@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Economy/prestige.js
 const {
     SlashCommandBuilder,
@@ -240,6 +241,7 @@ async function handlePrestigeInfo(interaction) {
         });
 
         collector.on('collect', async (i) => {
+            if (interactionBan(i)) return;
             // Show confirmation
             const confirmContainer = new ContainerBuilder()
                 .setAccentColor(0xFFA500)
@@ -296,6 +298,7 @@ async function handlePrestigeInfo(interaction) {
             });
 
             confirmCollector.on('collect', async (btn) => {
+                if (interactionBan(btn)) return;
                 if (btn.customId === `cancel_prestige_${interaction.user.id}`) {
                     const cancelledContainer = new ContainerBuilder()
                         .setAccentColor(0xFFA500)

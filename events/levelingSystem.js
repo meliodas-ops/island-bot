@@ -1,3 +1,4 @@
+const { activeBan } = require('../utils/bans');
 // events/levelingSystem.js
 const {
     ContainerBuilder,
@@ -17,6 +18,7 @@ module.exports = {
         if (!message.guild || message.author.bot) return;
 
         try {
+            if (activeBan(message.author.id)) return;
             const Leveling = serverModels.Leveling;
             const Settings = serverModels.ServerSettings;
 

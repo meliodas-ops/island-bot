@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Community/changelogs.js
 const {
     SlashCommandBuilder,
@@ -161,6 +162,7 @@ async function sendChangelog(interaction, changelogsData, dates, index) {
     });
 
     collector.on('collect', async (buttonInteraction) => {
+        if (interactionBan(buttonInteraction)) return;
         // Determine which button was pressed
         let newIndex = index;
         let shouldUpdate = false;

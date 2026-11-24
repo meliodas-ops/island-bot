@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Community/bot.js
 const {
     SlashCommandBuilder,
@@ -224,6 +225,7 @@ module.exports = {
         });
 
         collector.on('collect', async (i) => {
+            if (interactionBan(i)) return;
             if (i.customId === 'bot_info') {
                 const refreshedInfoContainer = await buildInfoContainer(client);
                 await i.update({

@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Economy/gamble.js
 const {
     SlashCommandBuilder,
@@ -439,6 +440,7 @@ async function handleMineStart(interaction) {
         });
 
         collector.on('collect', async (buttonInteraction) => {
+            if (interactionBan(buttonInteraction)) return;
             // Acknowledge immediately so the 3-second interaction token
             // doesn't expire while we do async DB work further down.
             try {

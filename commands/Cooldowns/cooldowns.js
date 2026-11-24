@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Cooldowns/cooldowns.js
 const {
     SlashCommandBuilder,
@@ -225,6 +226,7 @@ module.exports = {
         });
 
         collector.on('collect', async (i) => {
+            if (interactionBan(i)) return;
             // Refresh the cooldowns
             const refreshedEconomy = await Economy.getOrCreate(targetUser.id);
             const refreshedContainer = await buildCooldownContainer(targetUser, player, refreshedEconomy, interaction.user);

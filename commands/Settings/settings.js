@@ -86,16 +86,22 @@ module.exports = {
         const subcommand = interaction.options.getSubcommand();
         if (subcommand === 'leveling-view') {
             const settings = await serverModels.ServerSettings.getOrCreate(interaction.guildId, interaction.guild.name);
+            const details = [
+                `**Status:** ${settings.levelingEnabled ? 'Enabled' : 'Disabled'}`,
+                `**XP per eligible message:** ${settings.levelingMinXP}–${settings.levelingMaxXP}`,
+                `**XP cooldown:** ${settings.levelingInterval} seconds`,
+                `**Formula:** ${formulas.label(settings.levelingFormula)}`,
+                `**Announcement channel:** ${settings.levelUpChannel ? '<#' + settings.levelUpChannel + '>' : 'None selected'}`
+            ].join('\n');
+            const container = new ContainerBuilder()
+                .setAccentColor(settings.levelingEnabled ? 0x00FF00 : 0xFF0000)
+                .addTextDisplayComponents(new TextDisplayBuilder().setContent('## Server Leveling Settings'))
+                .addSeparatorComponents(new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small))
+                .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${details}\n\n-# ${interaction.guild.name}`));
+
             return interaction.reply({
-                content: [
-                    '**Server leveling settings**',
-                    `Status: ${settings.levelingEnabled ? 'Enabled' : 'Disabled'}`,
-                    `XP per eligible message: ${settings.levelingMinXP}–${settings.levelingMaxXP}`,
-                    `XP cooldown: ${settings.levelingInterval} seconds`,
-                    `Formula: ${formulas.label(settings.levelingFormula)}`,
-                    `Announcement channel: ${settings.levelUpChannel ? '<#' + settings.levelUpChannel + '>' : 'None selected'}`
-                ].join('\n'),
-                flags: MessageFlags.Ephemeral
+                components: [container],
+                flags: MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral
             });
         }
 

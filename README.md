@@ -38,6 +38,7 @@ Global commands are available wherever the bot is installed. Support-server comm
 | Support-server command | Subcommands or purpose |
 | --- | --- |
 | `/badge` | Owner tools to `add`, `remove`, `list`, or inspect `userbadges` |
+| `/ban` | Owner-only bot access controls: `add` and `edit` take a user, reason, and duration; `remove` takes a user. Temporary bans expire automatically. |
 | `/owner` | `stats` and `restart-bot`; `promocode` operations for create, list, delete, toggle, and info; `coin` operations for add, set, remove, reset, and delete |
 | `/example` | Example command that saves a named entry in SQLite |
 
@@ -63,3 +64,13 @@ Command access also depends on the command flags in `handler_settings` and membe
 - `events/` handles readiness, interactions, and message-based leveling.
 - `models/` defines player, economy, reward, and badge models. `serverModels/` defines server settings and server leveling.
 - `utils/` contains the shared database connection, configuration readers, command deployment logic, and game helpers.
+
+## Bot ban appeals
+
+Use `/appeal` or the **Appeal this ban** button on a ban notice. The bot asks six questions privately and saves each answer. Run the command again to resume a draft, answer a staff question, or check the decision. Discord supplies your account ID automatically.
+
+The owner sets the staff destination with `/ban appeal-channel channel:` in the support server. Submitted appeals also appear under `/ban appeal-view list`, including when channel delivery fails. The owner and support-server administrators with access to the configured review channel can approve, deny, or request more information. Approval lifts the bot ban. Decisions are available in the bot if Discord cannot deliver a DM.
+
+Use `/ban list` for active bans. Both lists accept an optional page number.
+
+After a denial, the player can open another appeal after 24 hours if the ban is still active. Drafts and requests for more information can be continued immediately. If staff channel delivery failed, the owner can open a pending appeal in `/ban appeal-view list` and use **Send to review channel** after configuring `/ban appeal-channel`.

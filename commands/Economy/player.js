@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Player/player.js
 const {
     SlashCommandBuilder,
@@ -752,6 +753,7 @@ async function sendLeaderboardPage(interaction, page, levels, totalPages, isInit
         message._collector = collector;
 
         collector.on('collect', async (buttonInteraction) => {
+            if (interactionBan(buttonInteraction)) return;
             let newPage = validPage;
 
             switch (buttonInteraction.customId) {

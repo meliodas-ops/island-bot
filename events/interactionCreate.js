@@ -1,3 +1,4 @@
+const { replyIfBanned } = require('../utils/bans');
 // events/interactionCreate.js
 const { EmbedBuilder, MessageFlags, ContainerBuilder, TextDisplayBuilder, SeparatorBuilder, SeparatorSpacingSize, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { models } = require('../utils/database');
@@ -10,6 +11,18 @@ const testers = contributors('testers');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
+        if ((interaction.isButton() || interaction.isModalSubmit()) && interaction.customId.startsWith('appeal:')) {
+            try { await require('../utils/appeals').handle(interaction); }
+            catch (error) {
+                console.error('Appeal interaction failed:', error.message);
+                if (!interaction.replied && !interaction.deferred) {
+                    await interaction.reply(require('../utils/moderationCard').card('Unable to complete this step. Reopen the appeal and try again.')).catch(() => {});
+                }
+            }
+            return;
+        }
+        const isAppeal = interaction.isChatInputCommand() && interaction.commandName === 'appeal';
+        if (!isAppeal && await replyIfBanned(interaction)) return;
         // Handle slash commands
         if (interaction.isChatInputCommand()) {
             const command = interaction.client.commands.get(interaction.commandName);

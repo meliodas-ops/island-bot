@@ -1,3 +1,4 @@
+const { interactionBan } = require('../../utils/bans');
 // commands/Owner/owner.js
 const {
     SlashCommandBuilder,
@@ -911,6 +912,7 @@ async function handleCoinDelete(interaction) {
     });
 
     collector.on('collect', async (i) => {
+        if (interactionBan(i)) return;
         if (i.customId === `cancel_delete_${user.id}`) {
             await i.update({
                 content: '❌ Deletion cancelled.',
