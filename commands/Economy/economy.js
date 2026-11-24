@@ -53,7 +53,7 @@ module.exports = {
                     .setMaxValue(100000)
             )
         ),
-    supportServer: true,
+    supportServer: false,
 
     async execute(interaction) {
         const subcommand = interaction.options.getSubcommand();

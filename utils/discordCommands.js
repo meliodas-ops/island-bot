@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { REST, Routes } = require('discord.js');
+const { REST, Routes, InteractionContextType } = require('discord.js');
 
 function loadCommands(directory, scopes) {
     for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
@@ -9,6 +9,7 @@ function loadCommands(directory, scopes) {
         else if (entry.name.endsWith('.js')) {
             const command = require(file);
             const definition = command.data.toJSON();
+            if (!command.supportServer) definition.contexts = [InteractionContextType.Guild];
             const scope = command.supportServer ? scopes.guild : scopes.global;
             if (typeof command.execute !== 'function' || scope.some(c => c.name === definition.name)) {
                 throw new Error('Invalid or duplicate command: ' + file);

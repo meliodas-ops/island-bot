@@ -42,7 +42,7 @@ module.exports = {
                     )
             )
         ),
-    supportServer: true,
+    supportServer: false,
 
     // Store active mine games
     activeMineGames: new Map(),

@@ -169,7 +169,7 @@ module.exports = {
                 .setDescription('User to check cooldowns for')
                 .setRequired(false)
         ),
-    supportServer: true,
+    supportServer: false,
 
     async execute(interaction) {
         const targetUser = interaction.options.getUser('user') || interaction.user;

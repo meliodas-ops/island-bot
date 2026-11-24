@@ -21,18 +21,7 @@ module.exports = {
             const Settings = serverModels.ServerSettings;
 
             // Get server settings
-            let settings = await Settings.findOne({
-                where: { guildId: message.guild.id }
-            });
-
-            // If no settings, create them
-            if (!settings) {
-                settings = await Settings.create({
-                    guildId: message.guild.id,
-                    guildName: message.guild.name,
-                    levelingEnabled: false // Disabled by default
-                });
-            }
+            const settings = await Settings.getOrCreate(message.guild.id, message.guild.name);
 
             // Check if leveling is enabled
             if (!settings.levelingEnabled) return;

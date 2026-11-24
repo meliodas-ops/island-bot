@@ -25,7 +25,7 @@ module.exports = {
             .setDescription('View your prestige status and requirements')
         ),
 
-    supportServer: true,
+    supportServer: false,
 
     async execute(interaction) {
         // Defer reply immediately to prevent interaction timeout

@@ -9,9 +9,7 @@ const { serverModels } = require('./utils/serverDatabase');
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers
+        GatewayIntentBits.GuildMessages
     ],
     partials: [
         Partials.Message,

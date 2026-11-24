@@ -319,7 +319,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('guide')
         .setDescription('Learn how to use the bot and its features'),
-    supportServer: true,
+    supportServer: false,
 
     async execute(interaction) {
         let currentPage = 0;

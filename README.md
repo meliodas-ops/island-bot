@@ -9,7 +9,7 @@ The source is public for anyone interested in how the game works. To play Island
 ## Start playing
 
 1. Run `/player register` and confirm. Registration grants 1,000 coins. Use `/player profile` to see your character.
-2. In the support server, use `/economy work`, `beg`, `rob`, or `daily` to earn rewards. Check `/cooldowns` to see when you can act again.
+2. Use `/economy work`, `beg`, `rob`, or `daily` to earn rewards. Check `/cooldowns` to see when you can act again.
 3. Use `/economy exchange` to trade 100 gold coins for one Island Fragment. The exchange spends only whole multiples of 100.
 4. Open `/prestige info` to see your requirements. The first prestige requires 200,000 coins, 1,500 fragments, and player level 100. Prestiging resets coins and current level progress, preserves fragments and total XP, and increases the multiplier for eligible gold rewards.
 
@@ -27,15 +27,16 @@ Global commands are available wherever the bot is installed. Support-server comm
 | `/bot info` | Bot information and statistics |
 | `/changelogs` | Browse the project's release notes |
 | `/ping`, `/hello` | Check responsiveness or get a greeting |
-
-| Support-server command | Subcommands or purpose |
-| --- | --- |
 | `/guide` | In-bot help |
 | `/economy` | `balance`, `work`, `beg`, `rob`, `daily`, `exchange` |
 | `/cooldowns` | Check action timers for yourself or a selected player |
 | `/gamble mines` | Bet coins, reveal tiles, and cash out before hitting a mine |
 | `/prestige info` | Review requirements and start the prestige confirmation flow |
 | `/settings leveling` | Administrator settings for `toggle`, `xp`, `interval`, `channel`, and `formula` |
+| `/settings leveling-view` | Administrators can view the current XP range, cooldown, curve, announcement channel, and enabled status for their server. |
+
+| Support-server command | Subcommands or purpose |
+| --- | --- |
 | `/badge` | Owner tools to `add`, `remove`, `list`, or inspect `userbadges` |
 | `/owner` | `stats` and `restart-bot`; `promocode` operations for create, list, delete, toggle, and info; `coin` operations for add, set, remove, reset, and delete |
 | `/example` | Example command that saves a named entry in SQLite |

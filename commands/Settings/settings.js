@@ -1,6 +1,6 @@
 // commands/Settings/leveling.js
 const {
-    SlashCommandBuilder,
+    SlashCommandBuilder, ChannelType, InteractionContextType,
     MessageFlags,
     PermissionFlagsBits,
     ContainerBuilder,
@@ -10,10 +10,13 @@ const {
 } = require('discord.js');
 const { serverModels } = require('../../utils/serverDatabase');
 
+const formulas = require('../../utils/levelingFormulas');
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('settings')
         .setDescription('Manage server settings (Admin only)')
+        .setContexts(InteractionContextType.Guild)
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addSubcommandGroup(group => group
             .setName('leveling')
@@ -27,14 +30,14 @@ module.exports = {
                 .setDescription('Set the XP range per message')
                 .addIntegerOption(option =>
                     option.setName('min')
-                        .setDescription('Minimum XP per message (1-50)')
+                        .setDescription('Minimum XP per message (1-1000)')
                         .setRequired(true)
                         .setMinValue(1)
                         .setMaxValue(1000)
                 )
                 .addIntegerOption(option =>
                     option.setName('max')
-                        .setDescription('Maximum XP per message (1-50)')
+                        .setDescription('Maximum XP per message (1-5000)')
                         .setRequired(true)
                         .setMinValue(1)
                         .setMaxValue(5000)
@@ -57,6 +60,7 @@ module.exports = {
                 .addChannelOption(option =>
                     option.setName('channel')
                         .setDescription('Text channel for level ups')
+                        .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
                         .setRequired(true)
                 )
             )
@@ -67,25 +71,30 @@ module.exports = {
                     option.setName('formula')
                         .setDescription('Choose a leveling formula')
                         .setRequired(true)
-                        .addChoices(
-                            { name: 'Amari Bot (5x² + 50x + 100)', value: 'amari' },
-                            { name: 'Atom Bot (100 × 1.5^(level-1))', value: 'atom-bot' },
-                            { name: 'Arcane Bot (50 × 1.8^(level-1))', value: 'arcane-bot' }
-                        )
+                        .addChoices(...formulas.choices)
                 )
             )
-            // REMOVED: message subcommand
-        ),
+        )
+        .addSubcommand(sub => sub.setName('leveling-view').setDescription('Show this server’s current leveling settings')),
 
-    supportServer: true,
+    supportServer: false,
 
     async execute(interaction) {
-        const subcommandGroup = interaction.options.getSubcommandGroup();
+        if (!interaction.inGuild() || !interaction.memberPermissions?.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({content: 'Only server administrators can use settings.', flags: MessageFlags.Ephemeral});
+        }
         const subcommand = interaction.options.getSubcommand();
-
-        if (subcommandGroup !== 'leveling') {
-            return await interaction.reply({
-                content: '❌ Unknown settings group!',
+        if (subcommand === 'leveling-view') {
+            const settings = await serverModels.ServerSettings.getOrCreate(interaction.guildId, interaction.guild.name);
+            return interaction.reply({
+                content: [
+                    '**Server leveling settings**',
+                    `Status: ${settings.levelingEnabled ? 'Enabled' : 'Disabled'}`,
+                    `XP per eligible message: ${settings.levelingMinXP}–${settings.levelingMaxXP}`,
+                    `XP cooldown: ${settings.levelingInterval} seconds`,
+                    `Formula: ${formulas.label(settings.levelingFormula)}`,
+                    `Announcement channel: ${settings.levelUpChannel ? '<#' + settings.levelUpChannel + '>' : 'None selected'}`
+                ].join('\n'),
                 flags: MessageFlags.Ephemeral
             });
         }
@@ -255,9 +264,9 @@ async function handleChannel(interaction) {
     const Settings = serverModels.ServerSettings;
     const channel = interaction.options.getChannel('channel');
 
-    if (!channel.isTextBased()) {
+    if (!channel?.permissionsFor(interaction.guild.members.me)?.has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages])) {
         return await interaction.reply({
-            content: '❌ Please select a text channel!',
+            content: '❌ Choose a channel where I can view and send messages.',
             flags: MessageFlags.Ephemeral
         });
     }
@@ -309,12 +318,6 @@ async function handleFormula(interaction) {
         settings.levelingFormula = formula;
         await settings.save();
 
-        const formulaNames = {
-            'amari': 'Amari Bot (5x² + 50x + 100)',
-            'atom-bot': 'Atom Bot (100 × 1.5^(level-1))',
-            'arcane-bot': 'Arcane Bot (50 × 1.8^(level-1))'
-        };
-
         const container = new ContainerBuilder()
             .setAccentColor(0x00FF00)
             .addTextDisplayComponents(
@@ -327,7 +330,7 @@ async function handleFormula(interaction) {
             )
             .addTextDisplayComponents(
                 new TextDisplayBuilder().setContent(
-                    `**New Formula**\n${formulaNames[formula]}\n\n` +
+                    `**New Formula**\n${formulas.label(formula)}\n\n` +
                     `-# ${interaction.guild.name}`
                 )
             );

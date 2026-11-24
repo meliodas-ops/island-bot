@@ -10,6 +10,7 @@ const {
     ThumbnailBuilder
 } = require('discord.js');
 const { serverModels } = require('../../utils/serverDatabase');
+const formulas = require('../../utils/levelingFormulas');
 const { buildProgressBar } = require('../../utils/progressBar');
 
 module.exports = {
@@ -109,7 +110,7 @@ async function handleRank(interaction) {
         const rank = allUsers.findIndex(u => u.userId === targetUser.id) + 1;
 
         // Get XP needed for next level
-        const xpNeeded = Leveling.getXPNeededForLevel(leveling.level);
+        const xpNeeded = Leveling.getXPNeededForLevelWithFormula(leveling.level, settings.levelingFormula);
         const progress = Math.min(Math.floor((leveling.currentXP / xpNeeded) * 100), 100);
         const progressBar = buildProgressBar(progress, 100, 10);
 
@@ -323,7 +324,7 @@ async function handleStats(interaction) {
                     `Status: ${settings.levelingEnabled ? '🟢 Enabled' : '🔴 Disabled'}\n` +
                     `XP Range: ${settings.levelingMinXP} - ${settings.levelingMaxXP} XP\n` +
                     `Cooldown: ${settings.levelingInterval}s\n` +
-                    `Formula: ${settings.levelingFormula}`
+                    `Formula: ${formulas.label(settings.levelingFormula)}`
                 )
             )
             .addSeparatorComponents(
